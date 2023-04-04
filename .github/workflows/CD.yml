@@ -6,44 +6,48 @@ on:
 
 jobs:
   deploy:
+    name: Build, Deploy
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./react-main # working directory 지정하기
+
+    strategy:
+      matrix:
+        node-version: [16]
+
     steps:
       - name: Checkout source code # 레포지토리 체크아웃
         uses: actions/checkout@master
 
-      - name: Set up Node # Node 버전 setup
+      - name: Use Node.js ${{ matrix.node-version }} # Node.js 버전 setup
         uses: actions/setup-node@master
         with:
-          node-version: 16
+          node-version: ${{ matrix.node-version }}
 
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v1
         with:
-          path: ./react-main/node_modules
+          path: node_modules
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lcok.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
-
-      - name: Checkout react-main folder
-        run: |
-          ls
-          cd react-main
-          ls
+          working-directory: ${{ env.working-directory }}
 
       - name: Install dependencies
-        run: |
-          npm install
-          ls
+        run: npm install
+        working-directory: ${{ env.working-directory }}
 
       - name: Build
         run: npm run build
         env:
           CI: false
           NODE_ENV: production
+        working-directory: ${{ env.working-directory }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+        working-directory: ${{ env.working-directory }}
