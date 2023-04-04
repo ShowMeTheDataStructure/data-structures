@@ -26,10 +26,15 @@ jobs:
             ${{ runner.OS }}-
 
       - name: Checkout react-main folder
-        run: cd react-main
+        run: |
+          ls
+          cd react-main
+          ls
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          ls
 
       - name: Build
         run: npm run build
