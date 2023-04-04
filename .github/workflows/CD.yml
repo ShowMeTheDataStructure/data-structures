@@ -25,6 +25,9 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
+      - name: Checkout react-main folder
+        run: cd react-main
+
       - name: Install dependencies
         run: npm install
 
@@ -38,4 +41,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./react-main/build
+          publish_dir: ./build
