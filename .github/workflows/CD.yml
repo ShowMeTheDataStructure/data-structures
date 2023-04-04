@@ -9,30 +9,27 @@ jobs:
     name: Build, Deploy
     runs-on: ubuntu-latest
     env:
-      working-directory: ./react-main # working directory 지정하기
+      working-directory: ./react-main
 
     strategy:
       matrix:
         node-version: [16]
 
     steps:
-      - name: Checkout source code # 레포지토리 체크아웃
-        uses: actions/checkout@master
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }} # Node.js 버전 setup
-        uses: actions/setup-node@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Cache node modules # node modules 캐싱
-        uses: actions/cache@v1
+      - name: Cache node modules
+        uses: actions/cache@v2
         with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lcok.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
-          working-directory: ${{ env.working-directory }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
@@ -46,9 +43,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          access_token: ${{ secrets.deploy }}
-          branch: gh-pages
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./react-main/build
