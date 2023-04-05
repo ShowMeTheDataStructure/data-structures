@@ -2,7 +2,7 @@ name: Deployment
 
 on:
   push:
-    branches: ["feature/5/deploy"]
+    branches: ["main"]
 
 permissions:
   contents: write
