@@ -1,0 +1,42 @@
+name: Deployment
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Build, Deploy
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./react-main # working directory 지정하기
+
+    strategy:
+      matrix:
+        node-version: [16]
+
+    steps:
+      - name: Checkout source code # 레포지토리 체크아웃
+        uses: actions/checkout@master
+
+      - name: Use Node.js ${{ matrix.node-version }} # Node.js 버전 setup
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build
+        run: npm run build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./react-main/build
