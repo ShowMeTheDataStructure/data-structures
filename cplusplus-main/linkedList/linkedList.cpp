@@ -1,10 +1,16 @@
 #include "linkedList.h"
 #include <iostream>
+#include <cstring>
 
-// constructor
+/**
+ * @brief Construct a new LinkedList : head, tail, size
+ */
 template <typename Type>
 LinkedList<Type>::LinkedList()
 {
+    head = NULL;
+    tail = NULL;
+    size = 0;
 }
 
 // Destructor
@@ -19,10 +25,32 @@ Type LinkedList<Type>::Get(const int index)
 {
 }
 
-// Add val at head
+/**
+ * @brief Add val at head
+ * @param val : value that we want to push at head
+ */
 template <typename Type>
 void LinkedList<Type>::AddAtHead(const Type &val)
 {
+    if (head == NULL && tail == NULL)
+    {
+        Node<Type> *node = new Node<Type>;
+        node->data = val;
+
+        head = node;
+        tail = head;
+    }
+
+    else
+    {
+        Node<Type> *node = new Node<Type>;
+        node->data = val;
+        node->link = head;
+
+        head = node;
+    }
+
+    size++;
 }
 
 // Add val at index
@@ -79,10 +107,19 @@ void LinkedList<Type>::CleanUp()
 {
 }
 
-// Print the list
+/**
+ * @brief print the nodes in the linked list
+ * @return template <typename Type>
+ */
 template <typename Type>
 void LinkedList<Type>::Print()
 {
+    Node<Type> *node = head;
+    for (int i = 0; i < size; ++i)
+    {
+        std::cout << node->data << std::endl;
+        node = node->link;
+    }
 }
 
 // check the linked list empty or not

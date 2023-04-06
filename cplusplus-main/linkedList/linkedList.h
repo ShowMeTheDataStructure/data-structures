@@ -17,7 +17,7 @@ class LinkedList
 private:
     Node<Type> *head;
     Node<Type> *tail;
-    int count;
+    int size;
 
 public:
     // constructor
