@@ -9,6 +9,8 @@ struct Node
 {
     Type data;
     Node *link;
+
+    Node() { link = NULL; }
 };
 
 template <typename Type>
@@ -16,7 +18,6 @@ class LinkedList
 {
 private:
     Node<Type> *head;
-    Node<Type> *tail;
     int size;
 
 public:
@@ -39,9 +40,12 @@ public:
     void DeleteAtIndex(const int index);
 
     // Delete val in linked list
-    void MoveToHead(const Type &val);
+    void DeleteValue(const Type &val);
 
     // Move the first element of val to head
+    void MoveToHead(const Type &val);
+
+    // Rotate the linked list right by steps times
     void Rotate(const int steps);
 
     // Reduce value that repeats multiple times
