@@ -1,6 +1,4 @@
 #include "linkedList.h"
-#include <iostream>
-#include <cstring>
 
 /**
  * @brief Construct a new LinkedList : head, size
@@ -8,14 +6,20 @@
 template <typename Type>
 LinkedList<Type>::LinkedList()
 {
-    head = NULL;
+    head = nullptr;
+    tail = nullptr;
     size = 0;
 }
 
-// Destructor
+/**
+ * @brief Destruct the LinkedList
+ */
 template <typename Type>
 LinkedList<Type>::~LinkedList()
 {
+    CleanUp();
+    delete head;
+    delete tail;
 }
 
 /**
@@ -26,14 +30,13 @@ LinkedList<Type>::~LinkedList()
 template <typename Type>
 Type LinkedList<Type>::Get(const int index)
 {
-    if (index < size)
-    {
-        Node<Type> *node = head;
-        for (int i = 0; i < index; ++i)
-            node = node->link;
+    handleIndexError(index, size - 1);
 
-        return node->data;
-    }
+    Node<Type> *curr = head;
+    for (int i = 0; i < index; ++i)
+        curr = curr->next;
+
+    return curr->data;
 }
 
 /**
@@ -43,132 +46,271 @@ Type LinkedList<Type>::Get(const int index)
 template <typename Type>
 void LinkedList<Type>::AddAtHead(const Type &val)
 {
-    if (head == NULL && tail == NULL)
-    {
-        Node<Type> *node = new Node<Type>;
-        node->data = val;
 
-        head = node;
+    // there is no node in linked list
+    if (head == nullptr && tail == nullptr)
+    {
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = val;
+
+        head = newNode;
+        tail = newNode;
     }
 
+    // there is at least one node in linked list
     else
     {
-        Node<Type> *node = new Node<Type>;
-        node->data = val;
-        node->link = head;
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = val;
 
-        head = node;
+        head->prev = newNode;
+        newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
+        head = newNode;
     }
 
     size++;
 }
 
-// Add val at index
+/**
+ * @brief Add val at tail
+ * @param val : value that we want to push at tail
+ */
+template <typename Type>
+void LinkedList<Type>::AddAtTail(const Type &val)
+{
+    if (head == nullptr && tail == nullptr)
+    {
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = val;
+
+        head = newNode;
+        tail = newNode;
+    }
+
+    else
+    {
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = val;
+
+        newNode->prev = tail;
+        tail->next = newNode;
+        newNode->next = head;
+        head->prev = newNode;
+
+        tail = newNode;
+    }
+
+    size++;
+}
+
+/**
+ * @brief Add val at index
+ * @param index : the index that we want to add val
+ * @param val  : the value that we want to add
+ */
 template <typename Type>
 void LinkedList<Type>::AddAtIndex(const int index, const Type &val)
 {
+    handleIndexError(index, size);
+
     if (index == 0)
-    {
         AddAtHead(val);
-        return;
-    }
-
-    if (index <= size)
+    else if (index == size)
+        AddAtTail(val);
+    else
     {
-        Node<Type> *node = new Node<Type>;
-        node->data = val;
 
-        Node<Type> *prev = head;
-        for (int i = 0; i < index - 1; ++i)
-        {
-            prev = prev->link;
-        }
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = val;
 
-        node->link = prev->link;
-        prev->link = node;
+        Node<Type> *temp = head;
+        for (int i = 0; i < index; ++i)
+            temp = temp->next;
+
+        newNode->prev = temp->prev;
+        temp->prev->next = newNode;
+        newNode->next = temp;
+        temp->prev = newNode;
 
         size++;
     }
 }
 
-// Delete an element located at index
+/**
+ * @brief Delete an element located at index
+ * @param index : the index that we want to delete
+ */
 template <typename Type>
 void LinkedList<Type>::DeleteAtIndex(const int index)
 {
+    handleIndexError(index, size);
+
+    Node<Type> *node = head;
+    for (int i = 0; i < index; ++i)
+        node = node->next;
+
+    if (index == 0)
+    {
+        if (size == 1)
+        {
+            head = nullptr;
+            tail = nullptr;
+        }
+        else
+        {
+            node->prev->next = node->next;
+            node->next->prev = node->prev;
+
+            Node<Type> *temp = head;
+            head = head->next;
+
+            temp = nullptr;
+        }
+    }
+    else if (index == size - 1)
+    {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+
+        Node<Type> *temp = tail;
+        tail = tail->prev;
+
+        temp = nullptr;
+    }
+    else
+    {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+
+        node = nullptr;
+    }
+
+    size--;
 }
 
 /**
  * @brief Delete val in linked list (if val exists, the first val is deleted)
  * @param val : the value we want to delete
  */
-// Delete val in linked list
 template <typename Type>
 void LinkedList<Type>::DeleteValue(const Type &val)
 {
-    if (head->data == val)
+    Node<Type> *temp = head;
+
+    int index;
+    for (index = 0; index < size; ++index)
     {
-        if (size == 1)
+        if (temp->data == val)
         {
-            head = NULL;
-        }
-        else
-        {
-            Node<Type> *node = head;
-            head = head->link;
-            node = NULL;
-        }
-
-        size--;
-        return;
-    }
-
-    Node<Type> *prev = head;
-    Node<Type> *curr = prev->link;
-
-    while (prev->link)
-    {
-        if (curr->data == val)
-        {
-            prev->link = curr->link;
-            curr = NULL;
-
-            size--;
+            DeleteAtIndex(index);
             break;
         }
 
-        prev = curr;
-        curr = curr->link;
+        temp = temp->next;
     }
 }
 
-// Move the first element of val to head
+/**
+ * @brief Move the first element of val to head
+ * @param val : the value that we want to move to head
+ */
 template <typename Type>
 void LinkedList<Type>::MoveToHead(const Type &val)
 {
+    const int currSize = Size();
+    DeleteValue(val);
+
+    if (currSize != size)
+    {
+        AddAtHead(val);
+    }
 }
 
-// Rotate the linked list right by steps times
+/**
+ * @brief Rotate the linked list right by steps times
+ * @param steps : the number we want to rotate
+ */
 template <typename Type>
 void LinkedList<Type>::Rotate(const int steps)
 {
+    Node<Type> *newHead = head;
+    Node<Type> *newTail = tail;
+
+    for (int i = 0; i < steps; ++i)
+    {
+        newHead = newHead->prev;
+        newTail = newTail->prev;
+    }
+
+    head = newHead;
+    tail = newTail;
 }
 
-// Reduce value that repeats multiple times
+/**
+ * @brief Reduce value that repeats multiple times
+ * @param repeats : the number we want to reduce value
+ */
 template <typename Type>
-void LinkedList<Type>::Reduce()
+void LinkedList<Type>::Reduce(const int repeats)
 {
+    for (int i = 0; i < repeats; ++i)
+        DeleteAtIndex(size - 1);
 }
 
-// Reverse at every k number of nodes at a time
+/**
+ * @brief Reverse at every k number of nodes at a time
+ * @param k
+ */
 template <typename Type>
 void LinkedList<Type>::K_Reverse(const int k)
 {
+    for (int i = 0; i < size - k; i += k)
+        Swap(i, i + k - 1);
 }
 
-// Sort even and odd numbers separately then append
+/**
+ * @brief Sort even and odd numbers separately
+ */
 template <typename Type>
 void LinkedList<Type>::EvenOddSeparateSort()
 {
+    int *evenLists = new int[size];
+    int *oddLists = new int[size];
+    int i = 0, j = 0, count = 0;
+
+    Node<Type> *node = head;
+
+    while (count < size)
+    {
+        if (node->data % 2 == 0)
+            evenLists[i++] = node->data;
+        else
+            oddLists[j++] = node->data;
+
+        node = node->next;
+        count++;
+    }
+
+    std::sort(evenLists, evenLists + i);
+    std::sort(oddLists, oddLists + j);
+
+    node = head;
+    count = 0;
+
+    int k = 0, l = 0;
+    while (k < i)
+    {
+        node->data = evenLists[k++];
+        node = node->next;
+    }
+
+    while (l < j)
+    {
+        node->data = oddLists[l++];
+        node = node->next;
+    }
 }
 
 /**
@@ -181,10 +323,22 @@ int LinkedList<Type>::Size()
     return size;
 }
 
-// Delete all elements from the linked list
+/**
+ * @brief Delete all elements from the linked list
+ */
 template <typename Type>
 void LinkedList<Type>::CleanUp()
 {
+    Node<Type> *node = head;
+
+    for (int i = 0; i < size; ++i)
+    {
+        Node<Type> *temp = node;
+        node = node->next;
+        temp = nullptr;
+    }
+
+    size = 0;
 }
 
 /**
@@ -197,9 +351,10 @@ void LinkedList<Type>::Print()
     Node<Type> *node = head;
     for (int i = 0; i < size; ++i)
     {
-        std::cout << node->data << std::endl;
-        node = node->link;
+        std::cout << node->data << " ";
+        node = node->next;
     }
+    std::cout << std::endl;
 }
 
 /**
@@ -207,10 +362,32 @@ void LinkedList<Type>::Print()
  * @return true if empty, false otherwise
  */
 template <typename Type>
-bool LinkedList<Type>::empty()
+bool LinkedList<Type>::Empty()
 {
     if (size == 0)
         return true;
     else
         return false;
+}
+
+/**
+ * @brief Swap the two nodes' value
+ * @param index1 : the node1's index
+ * @param index2  : the node2's index
+ */
+template <typename Type>
+void LinkedList<Type>::Swap(const int index1, const int index2)
+{
+    Node<Type> *node1 = head;
+    Node<Type> *node2 = head;
+
+    for (int i = 0; i < index1; ++i)
+        node1 = node1->next;
+
+    for (int j = 0; j < index2; ++j)
+        node2 = node2->next;
+
+    const int temp = node1->data;
+    node1->data = node2->data;
+    node2->data = temp;
 }

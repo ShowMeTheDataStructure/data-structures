@@ -3,14 +3,21 @@
 
 #include <typeinfo>
 #include <iostream>
+#include <cstring>
+#include <algorithm>
 
 template <typename Type>
 struct Node
 {
     Type data;
-    Node *link;
+    Node *prev;
+    Node *next;
 
-    Node() { link = NULL; }
+    Node()
+    {
+        prev = nullptr;
+        next = nullptr;
+    }
 };
 
 template <typename Type>
@@ -18,7 +25,34 @@ class LinkedList
 {
 private:
     Node<Type> *head;
+    Node<Type> *tail;
     int size;
+
+    void handleIndexError(const int index, const int cmp)
+    {
+        try
+        {
+            if (index > cmp)
+                throw std::string("index error list index out of range.");
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+
+    void handleEmptyError()
+    {
+        try
+        {
+            if (Empty())
+                throw std::string("linked list is empty. Please check again.");
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
 
 public:
     // constructor
@@ -32,6 +66,9 @@ public:
 
     // Add val at head
     void AddAtHead(const Type &val);
+
+    // Add val at tail
+    void AddAtTail(const Type &val);
 
     // Add val at index
     void AddAtIndex(const int index, const Type &val);
@@ -49,7 +86,7 @@ public:
     void Rotate(const int steps);
 
     // Reduce value that repeats multiple times
-    void Reduce();
+    void Reduce(const int repeats);
 
     // Reverse at every k number of nodes at a time
     void K_Reverse(const int k);
@@ -67,7 +104,10 @@ public:
     void Print();
 
     // check the linked list empty or not
-    bool empty();
+    bool Empty();
+
+    // Swap two node's value
+    void Swap(const int index1, const int index2);
 };
 
 #endif
