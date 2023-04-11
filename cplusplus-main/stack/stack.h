@@ -27,6 +27,6 @@ public:
 
     // Number of elements stored
     int size() const;
-}
+};
 
 #endif
