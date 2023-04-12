@@ -1,60 +1,48 @@
 #ifndef LINKEDLIST_H_
 #define LINKEDLIST_H_
 
-#include <typeinfo>
-#include <iostream>
-#include <cstring>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <typeinfo>
 
-template <typename Type>
-struct Node
-{
+namespace ShowMeTheDataStructure {
+template <typename Type> struct Node {
     Type data;
     Node *prev;
     Node *next;
 
-    Node()
-    {
+    Node() {
         prev = nullptr;
         next = nullptr;
     }
 };
 
-template <typename Type>
-class LinkedList
-{
-private:
+template <typename Type> class LinkedList {
+  private:
     Node<Type> *head;
     Node<Type> *tail;
     int size;
 
-    void handleIndexError(const int index, const int cmp)
-    {
-        try
-        {
+    void handleIndexError(const int index, const int cmp) {
+        try {
             if (index > cmp)
                 throw std::string("index error list index out of range.");
-        }
-        catch (const std::exception &e)
-        {
+        } catch (const std::exception &e) {
             std::cerr << e.what() << '\n';
         }
     }
 
-    void handleEmptyError()
-    {
-        try
-        {
+    void handleEmptyError() {
+        try {
             if (Empty())
                 throw std::string("linked list is empty. Please check again.");
-        }
-        catch (const std::exception &e)
-        {
+        } catch (const std::exception &e) {
             std::cerr << e.what() << '\n';
         }
     }
 
-public:
+  public:
     // constructor
     LinkedList();
 
@@ -109,5 +97,5 @@ public:
     // Swap two node's value
     void Swap(const int index1, const int index2);
 };
-
+} // namespace ShowMeTheDataStructure
 #endif
