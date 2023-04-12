@@ -6,4 +6,4 @@ project(
     LANGUAGES CXX
 )
 
-add_executable(main main.cpp ./linkedList/linkedList.cpp)
+add_executable(main main.cpp ./DataStructures/linkedList/linkedList.cpp)
