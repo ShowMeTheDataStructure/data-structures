@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "linkedList/linkedList.cpp"
-#include "linkedList/linkedList.h"
+#include "DataStructures/linkedList/linkedList.cpp"
+#include "DataStructures/linkedList/linkedList.h"
 
 using namespace std;
 
