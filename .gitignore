@@ -1,0 +1,4 @@
+./cplusplus-main/build
+./react-main/node_modules
+./react-main/package-lock.json
+.gitmessage.txt
