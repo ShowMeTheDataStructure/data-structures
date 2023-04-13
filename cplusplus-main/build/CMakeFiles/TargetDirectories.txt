@@ -1,3 +1,0 @@
-/Users/junghaejune/main/cplusplus-main/build/CMakeFiles/main.dir
-/Users/junghaejune/main/cplusplus-main/build/CMakeFiles/edit_cache.dir
-/Users/junghaejune/main/cplusplus-main/build/CMakeFiles/rebuild_cache.dir
