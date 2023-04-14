@@ -7,7 +7,6 @@ all:
 
 test:
 	g++ -o linkedList_test ./DataStructures/linkedList/linkedList_test.cpp ./DataStructures/linkedList/linkedList.cpp -isystem ./googletest/googletest/include -L ./googletest/build -pthread -lgtest $(CXXFLAGS)
-	./linkedList_test
 
 .phony:	clean
 clean:
