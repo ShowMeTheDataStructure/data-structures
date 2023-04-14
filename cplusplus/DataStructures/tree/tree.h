@@ -35,9 +35,13 @@ namespace ShowMeTheDataStructure
         // Eval
         double eval();
 
+        const std::string value();
+
         // build expression tree
-        Tree *build_expression_tree(const std::string &postfix);
+        // Tree *build_expression_tree(const std::string &postfix);
     };
+
+    Tree *build_expression_tree(const std::string &postfix);
 } // namespace ShowMeTheDataStructure
 
 #endif

@@ -1,5 +1,6 @@
 #include "to_postfix.cpp"
 #include "to_postfix.h"
+
 #include <gtest/gtest.h>
 
 using BasicToPostfix = ShowMeTheDataStructure::toPostfix;

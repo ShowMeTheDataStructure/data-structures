@@ -25,8 +25,12 @@ echo "GOOGLETEST"
 make linkedlistTest
 make queueTest
 make stackTest
+make to_postfixTest
+make treeTest
 ./linkedlist_test
 ./queue_test
 ./stack_test
+./to_postfix_test
+./tree_test
 
 exit 0
