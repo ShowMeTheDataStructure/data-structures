@@ -42,7 +42,10 @@ double ShowMeTheDataStructure::Tree::eval()
 {
 }
 
-ShowMeTheDataStructure::Tree *ShowMeTheDataStructure::Tree::build_expression_tree(const std::string &postfix)
+const std::string ShowMeTheDataStructure::Tree::value()
 {
-    return left;
+}
+
+ShowMeTheDataStructure::Tree *ShowMeTheDataStructure::build_expression_tree(const std::string &postfix)
+{
 }
