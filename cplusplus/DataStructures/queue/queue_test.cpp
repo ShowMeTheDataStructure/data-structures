@@ -4,13 +4,9 @@
 
 using BasicQueue = ShowMeTheDataStructure::Queue<int>;
 
-void test(int RESULT, BasicQueue &BQ)
-{
-    EXPECT_EQ(RESULT, BQ.front());
-}
+void test(int RESULT, BasicQueue &BQ) { EXPECT_EQ(RESULT, BQ.front()); }
 
-TEST(unitTest, Queue)
-{
+TEST(unitTest, Queue) {
     ShowMeTheDataStructure::Queue<int> queue;
 
     int front = 1;
@@ -20,8 +16,7 @@ TEST(unitTest, Queue)
     EXPECT_EQ(false, queue.empty());
     EXPECT_EQ(1000, queue.size());
 
-    while (!queue.empty())
-    {
+    while (!queue.empty()) {
         test(front, queue);
         queue.pop();
         front++;
@@ -31,8 +26,7 @@ TEST(unitTest, Queue)
     EXPECT_EQ(0, queue.size());
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
