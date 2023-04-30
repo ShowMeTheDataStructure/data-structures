@@ -102,7 +102,6 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtTail(const Type &val) {
 template <typename Type>
 void ShowMeTheDataStructure::LinkedList<Type>::AddAtIndex(const int index,
                                                           const Type &val) {
-    handleIndexError(index, size);
 
     if (index == 0)
         AddAtHead(val);
@@ -132,7 +131,6 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtIndex(const int index,
  */
 template <typename Type>
 void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index) {
-    handleIndexError(index, size);
 
     Node<Type> *node = head;
     for (int i = 0; i < index; ++i)

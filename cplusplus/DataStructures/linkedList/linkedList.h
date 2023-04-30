@@ -24,27 +24,9 @@ template <typename Type> class LinkedList {
     Node<Type> *tail;
     int size;
 
-    void handleIndexError(const int index, const int cmp) {
-        try {
-            if (index > cmp)
-                throw std::string("index error list index out of range.");
-        } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
-        }
-    }
-
-    void handleEmptyError() {
-        try {
-            if (Empty())
-                throw std::string("linked list is empty. Please check again.");
-        } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
-        }
-    }
-
   public:
     // constructor
-    LinkedList();
+    explicit LinkedList();
 
     // Destructor
     ~LinkedList();
