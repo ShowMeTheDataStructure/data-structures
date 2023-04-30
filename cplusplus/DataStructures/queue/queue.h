@@ -1,10 +1,15 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
+#include "../linkedList/linkedList.cpp"
+#include "../linkedList/linkedList.h"
 #include <iostream>
 
 namespace ShowMeTheDataStructure {
-template <typename Type> class Queue {
+template <typename Type> class Queue : LinkedList<Type> {
+  private:
+    LinkedList<Type> queue;
+
   public:
     // Constructor
     explicit Queue();
@@ -19,13 +24,13 @@ template <typename Type> class Queue {
     void pop();
 
     // Return first element
-    Type &front() const;
+    const Type front();
 
     // Return true if empty, false otherwise
-    bool empty() const;
+    bool empty();
 
     // Number of elements stored
-    int size() const;
+    int size();
 };
 } // namespace ShowMeTheDataStructure
 

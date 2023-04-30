@@ -1,10 +1,15 @@
 #ifndef STACK_H_
 #define STACK_H_
 
+#include "../linkedList/linkedList.cpp"
+#include "../linkedList/linkedList.h"
 #include <iostream>
 
 namespace ShowMeTheDataStructure {
-template <typename Type> class Stack {
+template <typename Type> class Stack : LinkedList<Type> {
+  private:
+    LinkedList<Type> stack;
+
   public:
     // Constructor
     explicit Stack();
@@ -19,13 +24,13 @@ template <typename Type> class Stack {
     void pop();
 
     // Return first element
-    Type &top() const;
+    Type top();
 
     // Return true if empty, false otherwise
-    bool empty() const;
+    bool empty();
 
     // Number of elements stored
-    int size() const;
+    int size();
 };
 } // namespace ShowMeTheDataStructure
 
