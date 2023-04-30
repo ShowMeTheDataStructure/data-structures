@@ -12,7 +12,7 @@ template <typename Type> class Queue : LinkedList<Type> {
 
   public:
     // Constructor
-    Queue();
+    explicit Queue();
 
     // Destructor
     ~Queue();
