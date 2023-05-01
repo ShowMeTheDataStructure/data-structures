@@ -30,7 +30,6 @@ std::string ShowMeTheDataStructure::toPostfix::infixToPostfix(
     std::string postfix = std::string();
 
     ShowMeTheDataStructure::Stack<std::string> st;
-    std::cout << infix << std::endl;
 
     while (ss >> str)
     {

@@ -1,28 +1,28 @@
 #ifndef TREE_H_
 #define TREE_H_
 
+#include "../stack/stack.h"
 #include <iostream>
 #include <sstream>
+#include <cstring>
 
 namespace ShowMeTheDataStructure
 {
+
     /**
      * Recursive binary tree structure for building expression tree
      */
-    class Tree
+    struct Tree
     {
-    private:
         std::string expr;
         Tree *left;
         Tree *right;
 
-    public:
         // Constructor, type of h - character
-        explicit Tree(char h, Tree *l = nullptr, Tree *r = nullptr);
+        explicit Tree(char h, Tree *l, Tree *r);
 
         // Constructor, type of h - string
-        explicit Tree(const std::string &h = std::string(), Tree *l = nullptr,
-                      Tree *r = nullptr);
+        explicit Tree(const std::string &h, Tree *l, Tree *r);
 
         // Destructor
         ~Tree();
@@ -37,11 +37,9 @@ namespace ShowMeTheDataStructure
         double eval();
 
         const std::string value();
-
-        // build expression tree
-        // Tree *build_expression_tree(const std::string &postfix);
     };
 
+    // build expression tree
     Tree *build_expression_tree(const std::string &postfix);
 }; // namespace ShowMeTheDataStructure
 
