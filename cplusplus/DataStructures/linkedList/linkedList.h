@@ -6,19 +6,25 @@
 #include <iostream>
 #include <typeinfo>
 
-namespace ShowMeTheDataStructure {
-template <typename Type> struct Node {
+namespace ShowMeTheDataStructure
+{
+  template <typename Type>
+  struct Node
+  {
     Type data;
     Node *prev;
     Node *next;
 
-    Node() {
-        prev = nullptr;
-        next = nullptr;
+    Node()
+    {
+      prev = nullptr;
+      next = nullptr;
     }
-};
+  };
 
-template <typename Type> class LinkedList {
+  template <typename Type>
+  class LinkedList
+  {
   private:
     Node<Type> *head;
     Node<Type> *tail;
@@ -78,6 +84,6 @@ template <typename Type> class LinkedList {
 
     // Swap two node's value
     void Swap(const int index1, const int index2);
-};
-} // namespace ShowMeTheDataStructure
+  };
+}; // namespace ShowMeTheDataStructure
 #endif

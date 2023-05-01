@@ -4,7 +4,8 @@
  * @brief Construct a new LinkedList : head, size
  */
 template <typename Type>
-ShowMeTheDataStructure::LinkedList<Type>::LinkedList() {
+ShowMeTheDataStructure::LinkedList<Type>::LinkedList()
+{
     head = nullptr;
     tail = nullptr;
     size = 0;
@@ -14,7 +15,8 @@ ShowMeTheDataStructure::LinkedList<Type>::LinkedList() {
  * @brief Destruct the LinkedList
  */
 template <typename Type>
-ShowMeTheDataStructure::LinkedList<Type>::~LinkedList() {
+ShowMeTheDataStructure::LinkedList<Type>::~LinkedList()
+{
     CleanUp();
     delete head;
     delete tail;
@@ -26,7 +28,8 @@ ShowMeTheDataStructure::LinkedList<Type>::~LinkedList() {
  * @return the value located at index in linked list
  */
 template <typename Type>
-Type ShowMeTheDataStructure::LinkedList<Type>::Get(const int index) {
+Type ShowMeTheDataStructure::LinkedList<Type>::Get(const int index)
+{
     Node<Type> *curr = head;
     for (int i = 0; i < index; ++i)
         curr = curr->next;
@@ -39,10 +42,12 @@ Type ShowMeTheDataStructure::LinkedList<Type>::Get(const int index) {
  * @param val : value that we want to push at head
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::AddAtHead(const Type &val) {
+void ShowMeTheDataStructure::LinkedList<Type>::AddAtHead(const Type &val)
+{
 
     // there is no node in linked list
-    if (head == nullptr && tail == nullptr) {
+    if (head == nullptr && tail == nullptr)
+    {
         Node<Type> *newNode = new Node<Type>;
         newNode->data = val;
 
@@ -51,7 +56,8 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtHead(const Type &val) {
     }
 
     // there is at least one node in linked list
-    else {
+    else
+    {
         Node<Type> *newNode = new Node<Type>;
         newNode->data = val;
 
@@ -70,8 +76,10 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtHead(const Type &val) {
  * @param val : value that we want to push at tail
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::AddAtTail(const Type &val) {
-    if (head == nullptr && tail == nullptr) {
+void ShowMeTheDataStructure::LinkedList<Type>::AddAtTail(const Type &val)
+{
+    if (head == nullptr && tail == nullptr)
+    {
         Node<Type> *newNode = new Node<Type>;
         newNode->data = val;
 
@@ -79,7 +87,8 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtTail(const Type &val) {
         tail = newNode;
     }
 
-    else {
+    else
+    {
         Node<Type> *newNode = new Node<Type>;
         newNode->data = val;
 
@@ -101,13 +110,15 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtTail(const Type &val) {
  */
 template <typename Type>
 void ShowMeTheDataStructure::LinkedList<Type>::AddAtIndex(const int index,
-                                                          const Type &val) {
+                                                          const Type &val)
+{
 
     if (index == 0)
         AddAtHead(val);
     else if (index == size)
         AddAtTail(val);
-    else {
+    else
+    {
 
         Node<Type> *newNode = new Node<Type>;
         newNode->data = val;
@@ -130,17 +141,22 @@ void ShowMeTheDataStructure::LinkedList<Type>::AddAtIndex(const int index,
  * @param index : the index that we want to delete
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index) {
+void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index)
+{
 
     Node<Type> *node = head;
     for (int i = 0; i < index; ++i)
         node = node->next;
 
-    if (index == 0) {
-        if (size == 1) {
+    if (index == 0)
+    {
+        if (size == 1)
+        {
             head = nullptr;
             tail = nullptr;
-        } else {
+        }
+        else
+        {
             node->prev->next = node->next;
             node->next->prev = node->prev;
 
@@ -149,7 +165,9 @@ void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index) {
 
             temp = nullptr;
         }
-    } else if (index == size - 1) {
+    }
+    else if (index == size - 1)
+    {
         node->prev->next = node->next;
         node->next->prev = node->prev;
 
@@ -157,7 +175,9 @@ void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index) {
         tail = tail->prev;
 
         temp = nullptr;
-    } else {
+    }
+    else
+    {
         node->prev->next = node->next;
         node->next->prev = node->prev;
 
@@ -172,12 +192,15 @@ void ShowMeTheDataStructure::LinkedList<Type>::DeleteAtIndex(const int index) {
  * @param val : the value we want to delete
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::DeleteValue(const Type &val) {
+void ShowMeTheDataStructure::LinkedList<Type>::DeleteValue(const Type &val)
+{
     Node<Type> *temp = head;
 
     int index;
-    for (index = 0; index < size; ++index) {
-        if (temp->data == val) {
+    for (index = 0; index < size; ++index)
+    {
+        if (temp->data == val)
+        {
             DeleteAtIndex(index);
             break;
         }
@@ -191,11 +214,13 @@ void ShowMeTheDataStructure::LinkedList<Type>::DeleteValue(const Type &val) {
  * @param val : the value that we want to move to head
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::MoveToHead(const Type &val) {
+void ShowMeTheDataStructure::LinkedList<Type>::MoveToHead(const Type &val)
+{
     const int currSize = Size();
     DeleteValue(val);
 
-    if (currSize != size) {
+    if (currSize != size)
+    {
         AddAtHead(val);
     }
 }
@@ -205,11 +230,13 @@ void ShowMeTheDataStructure::LinkedList<Type>::MoveToHead(const Type &val) {
  * @param steps : the number we want to rotate
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::Rotate(const int steps) {
+void ShowMeTheDataStructure::LinkedList<Type>::Rotate(const int steps)
+{
     Node<Type> *newHead = head;
     Node<Type> *newTail = tail;
 
-    for (int i = 0; i < steps; ++i) {
+    for (int i = 0; i < steps; ++i)
+    {
         newHead = newHead->prev;
         newTail = newTail->prev;
     }
@@ -223,7 +250,8 @@ void ShowMeTheDataStructure::LinkedList<Type>::Rotate(const int steps) {
  * @param repeats : the number we want to reduce value
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::Reduce(const int repeats) {
+void ShowMeTheDataStructure::LinkedList<Type>::Reduce(const int repeats)
+{
     for (int i = 0; i < repeats; ++i)
         DeleteAtIndex(size - 1);
 }
@@ -233,7 +261,8 @@ void ShowMeTheDataStructure::LinkedList<Type>::Reduce(const int repeats) {
  * @param k
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::K_Reverse(const int k) {
+void ShowMeTheDataStructure::LinkedList<Type>::K_Reverse(const int k)
+{
     for (int i = 0; i < size - k; i += k)
         Swap(i, i + k - 1);
 }
@@ -242,14 +271,16 @@ void ShowMeTheDataStructure::LinkedList<Type>::K_Reverse(const int k) {
  * @brief Sort even and odd numbers separately
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::EvenOddSeparateSort() {
+void ShowMeTheDataStructure::LinkedList<Type>::EvenOddSeparateSort()
+{
     int *evenLists = new int[size];
     int *oddLists = new int[size];
     int i = 0, j = 0, count = 0;
 
     Node<Type> *node = head;
 
-    while (count < size) {
+    while (count < size)
+    {
         if (node->data % 2 == 0)
             evenLists[i++] = node->data;
         else
@@ -266,12 +297,14 @@ void ShowMeTheDataStructure::LinkedList<Type>::EvenOddSeparateSort() {
     count = 0;
 
     int k = 0, l = 0;
-    while (k < i) {
+    while (k < i)
+    {
         node->data = evenLists[k++];
         node = node->next;
     }
 
-    while (l < j) {
+    while (l < j)
+    {
         node->data = oddLists[l++];
         node = node->next;
     }
@@ -281,7 +314,9 @@ void ShowMeTheDataStructure::LinkedList<Type>::EvenOddSeparateSort() {
  * @brief Return the number of element in the linked list
  * @return the size of linked list (the number of nodes in the linked list)
  */
-template <typename Type> int ShowMeTheDataStructure::LinkedList<Type>::Size() {
+template <typename Type>
+int ShowMeTheDataStructure::LinkedList<Type>::Size()
+{
     return size;
 }
 
@@ -289,7 +324,8 @@ template <typename Type> int ShowMeTheDataStructure::LinkedList<Type>::Size() {
  * @brief Delete all elements from the linked list
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::CleanUp() {
+void ShowMeTheDataStructure::LinkedList<Type>::CleanUp()
+{
     Reduce(size);
 }
 
@@ -298,9 +334,11 @@ void ShowMeTheDataStructure::LinkedList<Type>::CleanUp() {
  * @return Outputs node data one by one to the command line
  */
 template <typename Type>
-void ShowMeTheDataStructure::LinkedList<Type>::Print() {
+void ShowMeTheDataStructure::LinkedList<Type>::Print()
+{
     Node<Type> *node = head;
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         std::cout << node->data << " ";
         node = node->next;
     }
@@ -312,7 +350,8 @@ void ShowMeTheDataStructure::LinkedList<Type>::Print() {
  * @return true if empty, false otherwise
  */
 template <typename Type>
-bool ShowMeTheDataStructure::LinkedList<Type>::Empty() {
+bool ShowMeTheDataStructure::LinkedList<Type>::Empty()
+{
     if (size == 0)
         return true;
     else
@@ -326,7 +365,8 @@ bool ShowMeTheDataStructure::LinkedList<Type>::Empty() {
  */
 template <typename Type>
 void ShowMeTheDataStructure::LinkedList<Type>::Swap(const int index1,
-                                                    const int index2) {
+                                                    const int index2)
+{
     Node<Type> *node1 = head;
     Node<Type> *node2 = head;
 

@@ -1,14 +1,16 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../linkedList/linkedList.cpp"
 #include "../linkedList/linkedList.h"
 #include <iostream>
 
-namespace ShowMeTheDataStructure {
-template <typename Type> class Queue : LinkedList<Type> {
+namespace ShowMeTheDataStructure
+{
+  template <typename Type>
+  class Queue
+  {
   private:
-    LinkedList<Type> queue;
+    LinkedList<Type> q;
 
   public:
     // Constructor
@@ -31,7 +33,7 @@ template <typename Type> class Queue : LinkedList<Type> {
 
     // Number of elements stored
     int size();
-};
-} // namespace ShowMeTheDataStructure
+  };
+}; // namespace ShowMeTheDataStructure
 
 #endif

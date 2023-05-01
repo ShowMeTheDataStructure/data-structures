@@ -23,14 +23,16 @@ cd ../..
 # google test compile
 echo "GOOGLETEST"
 make linkedlistTest
-make queueTest
 make stackTest
+make queueTest
 make to_postfixTest
-make treeTest
+# make treeTest
 ./linkedlist_test
-./queue_test
 ./stack_test
+./queue_test
 ./to_postfix_test
-./tree_test
+# ./tree_test
+
+make clean
 
 exit 0

@@ -1,12 +1,15 @@
 #include "stack.cpp"
 #include "stack.h"
+
+#include "../linkedList/linkedList.cpp"
 #include <gtest/gtest.h>
 
 using BasicStack = ShowMeTheDataStructure::Stack<int>;
 
 void test(int RESULT, BasicStack &BS) { EXPECT_EQ(RESULT, BS.top()); }
 
-TEST(unitTest, stack) {
+TEST(unitTest, stack)
+{
     ShowMeTheDataStructure::Stack<int> stack;
 
     int front = 1000;
@@ -16,7 +19,8 @@ TEST(unitTest, stack) {
     EXPECT_EQ(false, stack.empty());
     EXPECT_EQ(1000, stack.size());
 
-    while (!stack.empty()) {
+    while (!stack.empty())
+    {
         test(front, stack);
         stack.pop();
 
@@ -27,7 +31,8 @@ TEST(unitTest, stack) {
     EXPECT_EQ(0, stack.size());
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
