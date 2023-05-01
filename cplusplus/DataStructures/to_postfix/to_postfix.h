@@ -11,6 +11,10 @@ namespace ShowMeTheDataStructure
 {
   class toPostfix
   {
+  private:
+    int priority(std::string ex);
+    bool isOperator(std::string ex);
+
   public:
     std::string infixToPostfix(const std::string &infix);
     std::string infixToPrefix(const std::string &infix);

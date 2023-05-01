@@ -1,6 +1,6 @@
 #include "to_postfix.h"
 
-int priority(std::string ex)
+int ShowMeTheDataStructure::toPostfix::priority(std::string ex)
 {
     if (ex == "+" || ex == "-")
         return 4;
@@ -12,7 +12,7 @@ int priority(std::string ex)
         return 0;
 }
 
-bool isOperator(std::string ex)
+bool ShowMeTheDataStructure::toPostfix::isOperator(std::string ex)
 {
     if (priority(ex))
         return true;
